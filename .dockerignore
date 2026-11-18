@@ -1,0 +1,10 @@
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.db
+**/.env
+frontend/dist
+desktop
+data
+.git
+.claude

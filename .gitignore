@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.db
+.env
+node_modules/
+dist/
+build/
+*.spec
+data/
+*.tgz
+*.tsbuildinfo
+.claude/settings.local.json

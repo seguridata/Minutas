@@ -1,0 +1,33 @@
+# Arranque:  docker compose up -d --build
+# Puerto:    PUERTO en el archivo .env junto a este (por defecto 8000)
+# HTTPS:     DOMINIO en .env y  docker compose --profile https up -d --build
+services:
+  minutas:
+    build: .
+    restart: unless-stopped
+    env_file: backend/.env
+    environment:
+      # La base de datos vive fuera del contenedor, en ./data, para no perderla al actualizar
+      DATABASE_URL: sqlite:////data/minutas.db
+    volumes:
+      - ./data:/data
+    ports:
+      - "${PUERTO:-8000}:8000"
+
+  # Opcional: certificado HTTPS automático (Let's Encrypt). Necesita un dominio que apunte al servidor
+  # y los puertos 80 y 443 abiertos desde internet.
+  https:
+    image: caddy:2
+    profiles: ["https"]
+    restart: unless-stopped
+    command: caddy reverse-proxy --from ${DOMINIO:-localhost} --to minutas:8000
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+    depends_on:
+      - minutas
+
+volumes:
+  caddy-data:

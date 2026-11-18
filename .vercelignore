@@ -1,0 +1,12 @@
+# Nunca se suben a Vercel: llaves, bases locales, entornos y la app de escritorio (lleva el modelo de Whisper)
+**/.env
+**/*.db
+**/.venv
+**/node_modules
+**/__pycache__
+frontend/dist
+desktop
+deploy
+data
+*.tgz
+.claude
